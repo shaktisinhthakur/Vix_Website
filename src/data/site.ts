@@ -54,6 +54,7 @@ export type ServiceDetail = {
   title: string;
   heroTitle: string;
   heroCopy: string;
+  heroImage?: string;
   overview: string;
   overview2: string;
   whatWeBuild: { title: string; copy: string }[];
@@ -68,6 +69,7 @@ export const serviceDetails: Record<string, ServiceDetail> = {
     title: 'AI Development',
     heroTitle: 'Intelligence Engineered for Production.',
     heroCopy: 'We design, train and ship AI systems that work in the real world — grounded, observable, and governed from day one.',
+    heroImage: '/AI_Neural_Network_Hero_3D-removebg-preview.png',
     overview: 'AI only creates leverage when it survives contact with production data, users and edge cases. We work across the full lifecycle — from data architecture and model selection to evaluation, deployment and monitoring.',
     overview2: 'Our teams pair applied research with product engineering, so the models you ship are not demos with a script but systems your business can run on.',
     whatWeBuild: [
@@ -288,90 +290,137 @@ export type Insight = {
   title: string;
   description: string;
   category: string;
+  /** ISO date, YYYY-MM-DD. */
   date: string;
   readingTime: string;
+  /** Short original summary shown on the detail page. */
   content: string[];
+  /**
+   * Path of the original post on the blog, appended to `company.blogUrl`.
+   * Verify each one against the live post before publishing.
+   */
+  externalSlug?: string;
 };
 
 export const insights: Insight[] = [
   {
-    slug: 'grounded-generation',
-    title: 'Building Grounded Generation: Why Citations Beat Confidence',
-    description: 'How we design RAG systems that stay tethered to truth — with evaluation, reranking and explicit uncertainty.',
-    category: 'AI',
-    date: '2026-03-12',
-    readingTime: '7 min',
-    content: [
-      'Generative interfaces are only as trustworthy as their grounding. When we build RAG for production, we treat retrieval as product work — not plumbing.',
-      'Our pipeline pairs dense and sparse retrieval, reranks with a cross-encoder, and surfaces citations inline. The model is instructed to say what it does not know — and that instruction is itself evaluated.',
-      'We maintain golden question sets per tenant, run nightly evals, and track hallucination rate alongside latency. Grounding becomes a metric the team owns, not a hope the demo sustains.',
-      'The result is a system that earns trust one cited answer at a time — and degrades gracefully when it cannot answer at all.',
-    ],
-  },
-  {
-    slug: 'agent-orchestration',
-    title: 'From Prompt to Platform: Orchestrating Tool-Using Agents',
-    description: 'Memory, tool contracts and approval gates — the unglamorous work that makes agents reliable.',
-    category: 'AI Agents',
-    date: '2026-02-28',
-    readingTime: '8 min',
-    content: [
-      'The prompt is the easy part. The system around it — permissions, state, observation — is what determines whether an agent is a toy or a tool.',
-      'We model tool calls as typed contracts with explicit scopes. Every invocation is logged, replayable and attributable. Agents carry working memory within a task and episodic memory across tasks, both bounded and auditable.',
-      'Human-in-the-loop is not a fallback; it is a designed checkpoint. Approvals, diffs and dry runs let a person stay accountable without staying busy.',
-      'Shipped this way, agents stop being demos and start being teammates — with the traces to prove it.',
-    ],
-  },
-  {
-    slug: 'saas-tenancy',
-    title: 'Multi-Tenancy Done Once, Done Right',
-    description: 'The data, auth and billing decisions that decide whether your SaaS survives its own growth.',
-    category: 'SaaS',
-    date: '2026-02-10',
-    readingTime: '6 min',
-    content: [
-      'Tenancy is a domain decision before it is a database decision. Isolation model, row-level policy, and workspace semantics ripple into every query you will ever write.',
-      'We favour patterns that are boring at scale: tenant-scoped schemas or RLS, entitlement checks at the edge, and metering as a first-class event stream. Billing mirrors the domain model so plans and limits never drift from code.',
-      'Build it once, well — and growth becomes a pricing conversation, not a migration.',
-    ],
-  },
-  {
-    slug: 'design-systems-velocity',
-    title: 'Design Systems as Velocity Multipliers',
-    description: 'Why token discipline and component contracts beat pixel-perfect one-offs.',
-    category: 'Product',
-    date: '2026-01-22',
-    readingTime: '5 min',
-    content: [
-      'Every interface you ship is a promise about every interface you will ship next. Design systems keep that promise consistent — and keep engineering fast.',
-      'We build with tokens, constraints and explicit component contracts. The system encodes taste so the team can move without revisiting every decision.',
-      'The payoff is not visual consistency. It is cycle time: fewer handoffs, fewer regressions, and a codebase that stays pleasant to work in.',
-    ],
-  },
-  {
-    slug: 'event-driven-reliability',
-    title: 'Event-Driven Without the Headaches',
-    description: 'Queues, idempotency and observability — the reliability primitives behind calm systems.',
+    slug: 'background-workflows-for-ai-apps',
+    title: 'Why AI Applications Need Background Workflows',
+    description:
+      'Long-running AI tasks — large document summarisation, repo indexing, PR review — do not fit inside a request cycle. A look at why background execution is a requirement, not an optimisation.',
     category: 'Engineering',
-    date: '2026-01-08',
-    readingTime: '7 min',
+    date: '2026-09-14',
+    readingTime: '16 min',
+    externalSlug: 'why-ai-applications-need-background-workflows',
     content: [
-      'Events are the nervous system of modern platforms. Without discipline, they are also the source of the strangest bugs.',
-      'We treat every consumer as idempotent, every message as retriable, and every workflow as a state machine you can inspect. Dead letters, backpressure and poison-pill handling are built in, not hoped for.',
-      'Reliability is not the absence of failure — it is graceful handling of every failure you can anticipate.',
+      'A user uploads a large PDF and expects a summary. Another connects a repository and expects a generated wiki. Both requests take far longer than an HTTP connection is willing to stay open, and both will fail intermittently for reasons outside your control — a rate limit, a timeout, a model returning malformed output.',
+      'The article walks through why these workloads belong in a queue rather than a request handler: durable state, retries with backoff, idempotency, partial progress the user can watch, and the ability to resume rather than restart when a single step fails.',
+      'It covers the trade-offs between the common approaches — job queues, workflow engines and event-driven pipelines — and what each one costs you in operational complexity.',
     ],
   },
   {
-    slug: 'future-ready-architecture',
-    title: 'Future-Ready Is a Design Choice',
-    description: 'How we pick stacks for longevity, not novelty — and keep platforms pleasant a year in.',
-    category: 'Innovation',
-    date: '2025-12-18',
-    readingTime: '6 min',
+    slug: 'ai-memory-for-agents',
+    title: 'AI Memory: How Can an AI Agent Remember You?',
+    description:
+      'Why assistants forget between conversations, and the architecture — short-term context, long-term stores, retrieval and forgetting — that lets an agent carry knowledge forward.',
+    category: 'AI Agents',
+    date: '2026-09-04',
+    readingTime: '15 min',
+    externalSlug: 'ai-memory-how-can-an-ai-agent-remember-you',
     content: [
-      'Technology choices compound. A year in, you live with the abstractions you chose on week two.',
-      'We optimise for typed contracts, observable boundaries and boring infrastructure. Novelty is isolated, not systemic — so the team can adopt new capability without rewriting the platform to do it.',
-      'Future-ready is not prediction. It is leaving the system in a state where the next good idea is easy to say yes to.',
+      'Tell an assistant something important and it is gone by the next session. That is not a bug in the model — a language model has no state between calls. Memory is something the surrounding system has to provide.',
+      'The post breaks the memory lifecycle into four operations: writing new facts, updating them when they change, retrieving the right ones at the right moment, and forgetting what is stale or no longer relevant.',
+      'It looks at where each type of memory lives — working context, episodic history, semantic facts — and the practical problems that show up in production: contradictory entries, unbounded growth, and retrieval that surfaces the wrong memory at the wrong time.',
+    ],
+  },
+  {
+    slug: 'beyond-vector-databases',
+    title: 'Beyond Vector Databases: Understanding Vectorless RAG, PageIndex, and Wiki-Based AI Memory',
+    description:
+      'Embeddings and a vector store are the default answer for RAG, but not the only one. An examination of retrieval approaches that skip vectors entirely.',
+    category: 'AI',
+    date: '2026-09-04',
+    readingTime: '16 min',
+    externalSlug: 'beyond-vector-databases-vectorless-rag-pageindex-wiki-based-ai-memory',
+    content: [
+      'Retrieval-Augmented Generation has settled into a standard recipe: chunk the documents, embed them, store the vectors, retrieve by similarity. It works, but similarity search has known failure modes — chunks that lose their context, semantically close passages that are factually irrelevant, and no notion of document structure.',
+      'This article surveys the alternatives. Vectorless approaches that let the model navigate documents directly. PageIndex-style retrieval that treats a document as a hierarchy rather than a bag of chunks. Wiki-based memory that maintains a curated, structured knowledge layer instead of raw text.',
+      'The comparison is practical rather than theoretical: what each approach costs, what it makes easier, and the kinds of corpora where it beats a straightforward vector search.',
+    ],
+  },
+  {
+    slug: 'model-context-protocol',
+    title: 'Model Context Protocol (MCP): How AI Agents Connect to the Real World',
+    description:
+      'An introduction to MCP — the open protocol that gives models a standard way to reach tools, data sources and external systems.',
+    category: 'AI Agents',
+    date: '2026-08-25',
+    readingTime: '12 min',
+    externalSlug: 'model-context-protocol-mcp-how-ai-agents-connect-to-the-real-world',
+    content: [
+      'Models reason well and write code well, but on their own they cannot read a file, query a database or call an API. Every integration has historically been bespoke — custom glue between one model and one system, rewritten for the next pairing.',
+      'The Model Context Protocol standardises that connection. The post explains the client-server model, how tools and resources are described to the model, and how a single MCP server becomes reusable across any client that speaks the protocol.',
+      'It also covers what the protocol deliberately leaves to you: permissions, auditability, and deciding which actions an agent should be allowed to take without a human in the loop.',
+    ],
+  },
+  {
+    slug: 'ai-llm-concepts-every-developer-should-know',
+    title: 'From Hallucinations to Guardrails: 16 Essential AI & LLM Concepts Every Developer Should Know',
+    description:
+      'A working vocabulary for anyone building on OpenAI, Claude, Gemini, LangChain or RAG — sixteen terms explained without the hand-waving.',
+    category: 'AI',
+    date: '2026-07-13',
+    readingTime: '8 min',
+    externalSlug: 'from-hallucinations-to-guardrails-16-essential-ai-and-llm-concepts',
+    content: [
+      'The terminology around language models moves faster than the documentation. Hallucination, grounding, temperature, context window, embeddings, fine-tuning, guardrails — most developers half-know them, which is enough to ship something and not enough to debug it.',
+      'This piece defines sixteen of the concepts that come up most often when building AI features, each with the practical consequence attached: what it changes about your output, your cost, or your failure modes.',
+      'It is written as a reference to come back to rather than a single sitting — useful when a model behaves in a way that is surprising until you know the name for it.',
+    ],
+  },
+  {
+    slug: 'retrieval-augmented-generation-explained',
+    title: 'Retrieval-Augmented Generation (RAG): What It Is, How It Works, and Why It Sometimes Fails',
+    description:
+      'Connecting a model to your documents does not automatically make it accurate. A walk through the RAG pipeline and the specific places it breaks.',
+    category: 'AI',
+    date: '2026-07-12',
+    readingTime: '10 min',
+    externalSlug: 'retrieval-augmented-generation-rag-what-it-is-how-it-works-and-why-it-fails',
+    content: [
+      'RAG substantially improves a model\'s ability to answer questions about knowledge it was never trained on. It does not make the model correct, and the gap between those two statements is where most production disappointment lives.',
+      'The article follows a query through the full pipeline — chunking, embedding, retrieval, reranking, prompt assembly, generation — and identifies what can go wrong at each stage.',
+      'Common culprits get specific attention: chunk boundaries that split an answer in half, retrieval that returns topically related but factually wrong passages, and a model that confidently fills gaps the retrieved context never covered.',
+    ],
+  },
+  {
+    slug: 'prompt-engineering-techniques',
+    title: 'Prompt Engineering: Zero-Shot, Few-Shot & Chain of Thought Prompting',
+    description:
+      'Three foundational prompting techniques, when each one earns its extra tokens, and how to tell which your task actually needs.',
+    category: 'AI',
+    date: '2026-07-05',
+    readingTime: '5 min',
+    externalSlug: 'prompt-engineering-zero-shot-few-shot-and-chain-of-thought-prompting',
+    content: [
+      'The same model will give noticeably different answers depending on how a request is framed. Prompt engineering is the practice of framing it deliberately rather than by accident.',
+      'The post covers three techniques in order of cost. Zero-shot: describe the task and ask. Few-shot: show worked examples so the model infers the pattern and the output format. Chain of thought: ask for the reasoning steps before the answer, which helps on problems with multiple dependent steps.',
+      'Each comes with a note on when it is overkill — chain of thought on a classification task buys latency and nothing else.',
+    ],
+  },
+  {
+    slug: 'understanding-large-language-models',
+    title: 'Understanding Large Language Models (LLMs)',
+    description:
+      'A beginner-friendly path from prompt to response — tokenization, transformers, and what is actually happening when a model answers you.',
+    category: 'AI',
+    date: '2026-06-30',
+    readingTime: '8 min',
+    externalSlug: 'understanding-large-language-models-llms',
+    content: [
+      'Most people now use a language model daily — asking for an explanation, drafting an email, getting a code suggestion — without a clear picture of what happens after they hit enter.',
+      'This introduction traces that path: text broken into tokens, tokens turned into vectors, attention letting the model weigh which parts of the input matter, and a prediction produced one token at a time.',
+      'It assumes no machine learning background and stays with the intuition, which is enough to explain why models are fluent, why they are confidently wrong, and why context length matters.',
     ],
   },
 ];
