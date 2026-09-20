@@ -17,15 +17,16 @@ const CONTACT_ENDPOINT = import.meta.env.VITE_CONTACT_ENDPOINT as string | undef
 /**
  * Integration point for the contact form.
  * If VITE_CONTACT_ENDPOINT is set, POSTs JSON there.
- * Otherwise resolves locally so the UI remains functional.
+ * Otherwise returns an error so the UI shows the service is unavailable.
  * Replace with your email / API / database as needed.
  */
 export async function submitContact(payload: ContactPayload): Promise<ContactResult> {
   if (!CONTACT_ENDPOINT) {
-    // No backend configured — simulate success for now.
-    await new Promise((r) => setTimeout(r, 900));
-    console.info('[contactService] No VITE_CONTACT_ENDPOINT configured — payload:', payload);
-    return { ok: true };
+    // No backend configured — return a clear error instead of faking success.
+    return {
+      ok: false,
+      error: 'Contact service is currently unavailable. Please email us directly at hello@ideavix.com.',
+    };
   }
   try {
     const res = await fetch(CONTACT_ENDPOINT, {
