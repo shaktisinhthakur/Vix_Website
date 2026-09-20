@@ -1,7 +1,6 @@
 import React from 'react';
-import { createBrowserRouter, RouterProvider, Outlet, useLocation } from 'react-router-dom';
-import { Navbar } from './components/layout/Navbar';
-import { Footer } from './components/layout/Footer';
+import { createBrowserRouter, RouterProvider, useLocation } from 'react-router-dom';
+import { Layout } from './components/layout/Layout';
 import { Home } from './pages/Home';
 import { ServicesPage } from './pages/ServicesPage';
 import { ServiceDetailPage } from './pages/ServiceDetailPage';
@@ -25,22 +24,18 @@ function ScrollManager() {
   return null;
 }
 
-function Layout() {
+function AppLayout() {
   return (
-    <div className="min-h-screen w-full bg-ink text-ivory antialiased">
+    <>
       <ScrollManager />
-      <Navbar />
-      <main>
-        <Outlet />
-      </main>
-      <Footer />
-    </div>
+      <Layout />
+    </>
   );
 }
 
 const router = createBrowserRouter([
   {
-    element: <Layout />,
+    element: <AppLayout />,
     children: [
       { path: '/', element: <Home /> },
       { path: '/services', element: <ServicesPage /> },

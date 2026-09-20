@@ -16,42 +16,46 @@
 /* END TAILWIND IMPORTS — ALL OTHER CSS MUST GO BELOW THIS LINE */
 
 @custom-variant dark (&:is(.dark *));
+
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
+  /* Light Theme Colors (Default) */
+  --background: #FFF9F2;
+  --foreground: #111827;
+  --card: #FFFFFF;
+  --card-foreground: #111827;
+  --popover: #FFFFFF;
+  --popover-foreground: #111827;
+  --primary: #087CFF;
+  --primary-foreground: #FFFFFF;
+  --secondary: #FFF7ED;
+  --secondary-foreground: #111827;
+  --muted: #FFF7ED;
+  --muted-foreground: #64748B;
+  --accent: #FFF7ED;
+  --accent-foreground: #111827;
+  --destructive: #EF4444;
+  --destructive-foreground: #FFFFFF;
+  --border: #F1E7D8;
+  --input: #F1E7D8;
+  --ring: #087CFF;
+  --chart-1: #087CFF;
+  --chart-2: #00D9FF;
+  --chart-3: #7C3AED;
+  --chart-4: #FFB84D;
+  --chart-5: #FFE4B8;
   --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --sidebar: #FFF7ED;
+  --sidebar-foreground: #111827;
+  --sidebar-primary: #087CFF;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #FFF7ED;
+  --sidebar-accent-foreground: #111827;
+  --sidebar-border: #F1E7D8;
+  --sidebar-ring: #087CFF;
 }
-:root.dark {
+
+.dark {
+  /* Dark Theme Colors */
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.145 0 0);
@@ -85,44 +89,108 @@
   --sidebar-border: oklch(0.269 0 0);
   --sidebar-ring: oklch(0.439 0 0);
 }
+
 @layer base {
   * {
     @apply border-border outline-ring;
   }
   body {
     @apply bg-background text-foreground;
+    transition: background-color 250ms ease, color 250ms ease;
   }
 }
+
 /* --- Ideavix brand layer --- */
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+/* Light theme background with subtle orange/cyan glow */
+:root:not(.dark) html {
+  background-color: #FFF9F2;
+}
+
+:root:not(.dark) body {
+  background-color: #FFF9F2;
+  color: #111827;
+}
+
+/* Dark theme background */
+.dark html {
   background-color: #030617;
 }
-body {
+
+.dark body {
   background-color: #030617;
   color: #f8faff;
+}
+
+body {
   font-family: 'Geist', ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  width: 100%;
+  transition: background-color 250ms ease, color 250ms ease;
 }
+
+#root {
+  overflow-x: clip;
+}
+
 ::selection {
   background: rgba(0, 107, 255, 0.35);
   color: #f8faff;
 }
+
+:root:not(.dark) ::selection {
+  background: rgba(8, 124, 255, 0.35);
+  color: #111827;
+}
+
 .ivx-grid {
   background-image: linear-gradient(to right, rgba(23, 38, 83, 0.55) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(23, 38, 83, 0.55) 1px, transparent 1px);
   background-size: 72px 72px;
 }
+
+.dark .ivx-grid {
+  background-image: linear-gradient(to right, rgba(23, 38, 83, 0.55) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(23, 38, 83, 0.55) 1px, transparent 1px);
+}
+
+:root:not(.dark) .ivx-grid {
+  background-image: linear-gradient(to right, rgba(15, 23, 42, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.08) 1px, transparent 1px);
+}
+
 .ivx-dots {
   background-image: radial-gradient(rgba(23, 38, 83, 0.9) 1px, transparent 1px);
   background-size: 26px 26px;
 }
+
+.dark .ivx-dots {
+  background-image: radial-gradient(rgba(23, 38, 83, 0.9) 1px, transparent 1px);
+}
+
+:root:not(.dark) .ivx-dots {
+  background-image: radial-gradient(rgba(15, 23, 42, 0.12) 1px, transparent 1px);
+}
+
 .ivx-text-gradient {
   background-image: linear-gradient(100deg, #f8faff 0%, #7fc8ff 45%, #c238ff 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
+
+:root:not(.dark) .ivx-text-gradient {
+  background-image: linear-gradient(100deg, #087CFF 0%, #00D9FF 45%, #7C3AED 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
 .ivx-border-anim {
   position: relative;
 }
@@ -159,11 +227,73 @@ body {
   display: none;
 }
 
+/* Light theme hero background glow */
+:root:not(.dark) .hero-glow {
+  background:
+    radial-gradient(
+      circle at 15% 25%,
+      rgba(255, 184, 77, 0.20),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 85% 15%,
+      rgba(0, 217, 255, 0.07),
+      transparent 28%
+    ),
+    #FFF9F2;
+}
+
+/* Smooth theme transitions for all themed elements */
+* {
+  transition: background-color 250ms ease, border-color 250ms ease, color 250ms ease, box-shadow 250ms ease;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* Focus visible styles for keyboard navigation */
+:focus-visible {
+  outline: 2px solid #00D9FF;
+  outline-offset: 2px;
+}
+
+/* Skip link for accessibility */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #006BFF;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  z-index: 100;
+  text-decoration: none;
+  font-weight: 500;
+}
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* Ensure sufficient contrast for text */
+.text-slateish {
+  color: #A7B1C8;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --border: #FFFFFF;
+    --ring: #00D9FF;
+  }
+  .dark {
+    --border: #FFFFFF;
+    --ring: #00D9FF;
   }
 }
