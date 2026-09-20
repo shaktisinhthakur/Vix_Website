@@ -5,6 +5,7 @@ import { PageHero } from '../components/ui/PageHero';
 import { CTASection } from '../components/ui/CTASection';
 import { Reveal } from '../components/Reveal';
 import { services, Service } from '../data/site';
+import { Seo } from '../components/Seo';
 
 const iconMap: Record<Service['icon'], React.ComponentType<{ className?: string; style?: React.CSSProperties } & { strokeWidth?: number }>> = { brain: Brain, code: Code2, bot: Bot, layers: Layers, pen: PenTool, cloud: Cloud };
 
@@ -20,6 +21,7 @@ const serviceExtras: Record<string, { capabilities: string[] }> = {
 export function ServicesPage() {
   return (
     <>
+      <Seo path="/services" title="Services" description="Six disciplines, one senior delivery team. We assemble the capability mix your product actually needs — from AI and engineering to design and infrastructure." />
       <PageHero
         eyebrow="Services"
         title={<>Engineering Ideas Into <span className="ivx-text-gradient">Digital Products.</span></>}
