@@ -4,10 +4,12 @@ import { PageHero } from '../components/ui/PageHero';
 import { CTASection } from '../components/ui/CTASection';
 import { Reveal } from '../components/Reveal';
 import { products } from '../data/site';
+import { Seo } from '../components/Seo';
 
 export function ProductsPage() {
   return (
     <>
+      <Seo path="/products" title="Products" description="Reference architectures and platform primitives we use with clients — built to be cloned, extended, and owned by your team." />
       <PageHero eyebrow="Products" title={<>Technology We Build <span className="ivx-text-gradient">for Tomorrow.</span></>} copy="Reference architectures and platform primitives we use with clients — built to be cloned, extended, and owned by your team." />
       <section className="border-t border-hairline/60 py-12 sm:py-16">
         <div className="mx-auto w-full max-w-[1320px] px-5 sm:px-8">
@@ -23,7 +25,6 @@ export function ProductsPage() {
                   <p className="mt-4 text-[0.92rem] leading-relaxed text-slateish">{p.description}</p>
                   <p className="mt-4 font-mono text-[0.72rem] text-slateish/60">{p.tech}</p>
                   <span className="mt-6 inline-flex text-[0.86rem] font-medium text-slateish group-hover:text-ivory">Learn more <span className="ml-1 text-brand-cyan">→</span></span>
-                  <p className="mt-2 text-[0.72rem] text-slateish/50">Placeholder — ready to replace with real product detail when available.</p>
                 </div>
               </Reveal>
             ))}

@@ -5,11 +5,13 @@ import { PageHero } from '../components/ui/PageHero';
 import { CTASection } from '../components/ui/CTASection';
 import { Reveal } from '../components/Reveal';
 import { solutionsOverview } from '../data/site';
+import { Seo } from '../components/Seo';
 
 export function SolutionsPage() {
   return (
     <>
-      <PageHero eyebrow="Solutions" title={<>Intelligence That <span className="ivx-text-gradient">Moves Business Forward.</span></>} copy="Ideavix's intelligent technology solutions — grounded in your data, governed for production, and designed to compound." />
+      <Seo path="/solutions" title="Solutions" description="Ideavix's intelligent technology solutions — grounded in your data, governed for production, and designed to compound." />
+      <PageHero eyebrow="Solutions" title={<>Intelligence That <span className="ivx-text-gradient">Moves Business Forward.</span></>} copy="Ideavix's intelligent technology solutions — grounded in your data, governed for production, and designed to compound." imageSrc="/solutions-hero.png" />
       <section className="border-t border-hairline/60 py-12 sm:py-16">
         <div className="mx-auto w-full max-w-[1320px] px-5 sm:px-8">
           <div className="grid gap-5 md:grid-cols-3">
@@ -21,9 +23,30 @@ export function SolutionsPage() {
                   <h3 className="mt-4 font-heading text-[1.35rem] font-semibold text-ivory">{s.title}</h3>
                   <p className="mt-3 text-[0.92rem] leading-relaxed text-slateish">{s.copy}</p>
                   <ul className="mt-6 space-y-2 text-[0.84rem] text-slateish/80">
-                    {s.slug === 'ai-agents' ? <><li>• Tool calling & memory</li><li>• Multi-agent orchestration</li></> : null}
-                    {s.slug === 'generative-ai' ? <><li>• RAG & semantic search</li><li>• Grounded generation</li></> : null}
-                    {s.slug === 'intelligent-automation' ? <><li>• Event-driven workflows</li><li>• Workflow orchestration</li></> : null}
+                    {s.slug === 'ai-agents' ? <>
+                      <li>• Tool calling & memory</li>
+                      <li>• Multi-agent orchestration</li>
+                      <li className="flex items-center gap-1.5 text-ivory font-medium">
+                        <img src="/ai-agents.png" alt="AI Agents" className="w-5 h-5 mr-1" />
+                        AI Agents
+                      </li>
+                    </> : null}
+                    {s.slug === 'generative-ai' ? <>
+                      <li>• RAG & semantic search</li>
+                      <li>• Grounded generation</li>
+                      <li className="flex items-center gap-1.5 text-ivory font-medium">
+                        <img src="/genai.png" alt="Generative AI" className="w-5 h-5 mr-1" />
+                        Generative AI
+                      </li>
+                    </> : null}
+                    {s.slug === 'intelligent-automation' ? <>
+                      <li>• Event-driven workflows</li>
+                      <li>• Workflow orchestration</li>
+                      <li className="flex items-center gap-1.5 text-ivory font-medium">
+                        <img src="/automate.png" alt="Intelligent Automation" className="w-5 h-5 mr-1" />
+                        Intelligent Automation
+                      </li>
+                    </> : null}
                   </ul>
                   <span className="mt-6 inline-flex items-center gap-1.5 text-[0.88rem] font-medium text-ivory">Explore solution <ArrowRight className="h-4 w-4 text-brand-cyan transition-transform group-hover:translate-x-0.5" /></span>
                 </Link>

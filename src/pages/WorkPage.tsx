@@ -4,15 +4,17 @@ import { PageHero } from '../components/ui/PageHero';
 import { CTASection } from '../components/ui/CTASection';
 import { Reveal } from '../components/Reveal';
 import { caseStudies } from '../data/site';
+import { Seo } from '../components/Seo';
 
 const filters = ['All', 'AI', 'SaaS', 'Web', 'Developer Tools', 'Infrastructure'] as const;
 
 export function WorkPage() {
   const [active, setActive] = useState<typeof filters[number]>('All');
   const filtered = active === 'All' ? caseStudies : caseStudies.filter(c => c.category.toLowerCase().includes(active.toLowerCase()) || c.stack.join(' ').toLowerCase().includes(active.toLowerCase()));
-  // Keep category neutral — remove fabricated metrics; show stack and neutral copy
+
   return (
     <>
+      <Seo path="/work" title="Work" description="Selected platforms we designed, engineered and shipped with our partners. No invented metrics — just what the system does and how it's built." />
       <PageHero eyebrow="Work" title={<>Ideas We've Turned <span className="ivx-text-gradient">Into Technology.</span></>} copy="Selected platforms we designed, engineered and shipped with our partners. No invented metrics — just what the system does and how it's built." />
       <section className="border-t border-hairline/60 py-10 sm:py-12">
         <div className="mx-auto w-full max-w-[1320px] px-5 sm:px-8">
@@ -51,12 +53,6 @@ export function WorkPage() {
           {!filtered.length ? (
             <p className="mt-10 rounded-2xl border border-hairline bg-surface/30 px-6 py-8 text-center text-slateish">No projects in this category yet.</p>
           ) : null}
-
-          <Reveal delay={0.15}>
-            <div className="mt-12 rounded-2xl border border-hairline bg-surface/20 px-6 py-6 text-center">
-              <p className="text-[0.88rem] leading-relaxed text-slateish">Project details shown here are illustrative placeholders. Replace the copy, stack and imagery with real case studies when available — the layout is ready.</p>
-            </div>
-          </Reveal>
         </div>
       </section>
       <CTASection title={<>Have a system worth <span className="ivx-text-gradient">building properly?</span></>} copy="We'd love to hear what you're building — and help you ship it." primaryTo="/contact" secondaryLabel="Our Services" secondaryTo="/services" />
