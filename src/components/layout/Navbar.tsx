@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowRight, ChevronDown, Menu, X } from 'lucide-react';
-import { Logo } from '../Logo';
 import { navLinks, serviceNav, solutionNav } from '../../data/site';
 
 const dropdownLinkCls = "block rounded-lg px-3 py-2.5 text-[0.84rem] font-medium text-slateish transition-colors hover:bg-surface hover:text-ivory";
@@ -48,8 +47,8 @@ export function Navbar() {
     <header className="fixed inset-x-0 top-0 z-50">
       <div className={`border-b transition-all duration-500 ${scrolled ? 'border-hairline/80 bg-ink/80 backdrop-blur-xl' : 'border-transparent bg-transparent'}`}>
         <nav aria-label="Primary" className="mx-auto flex h-16 w-full max-w-[1320px] items-center justify-between px-5 sm:h-[72px] sm:px-8">
-          <Link to="/" className="group flex items-center" aria-label="Ideavix home">
-            <Logo />
+          <Link to="/" className="group flex items-center shrink-0 gap-2.5" aria-label="Ideavix home">
+            <img src="/logo.png" alt="Ideavix Logo" width="800" height="320" fetchPriority="high" decoding="async" className="h-10 w-auto object-contain sm:h-11" />
           </Link>
 
           <ul className="hidden items-center gap-0.5 lg:flex">
@@ -119,7 +118,7 @@ export function Navbar() {
             })}
           </ul>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 shrink-0">
             <Link to="/contact" className="group hidden items-center gap-2 rounded-full bg-gradient-to-r from-brand-blue via-[#2b8bff] to-brand-purple p-[1px] sm:inline-flex">
               <span className="flex items-center gap-2 rounded-full bg-ink/70 px-5 py-2.5 text-[0.85rem] font-medium text-ivory transition-colors duration-300 group-hover:bg-transparent">
                 Let's Talk

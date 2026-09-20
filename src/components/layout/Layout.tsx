@@ -5,9 +5,10 @@ import { Footer } from './Footer';
 
 export function Layout() {
   return (
-    <div className="min-h-screen w-full bg-ink text-ivory antialiased">
+    <div className="min-h-screen w-full bg-background text-foreground antialiased">
+      <a href="#main-content" className="skip-link">Skip to main content</a>
       <Navbar />
-      <main>
+      <main id="main-content">
         <Outlet />
       </main>
       <Footer />
