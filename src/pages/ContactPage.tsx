@@ -1,25 +1,27 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, MapPin, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
+import { Mail, MapPin, CheckCircle2, AlertCircle, Loader2, ArrowLeft } from 'lucide-react';
 import { PageHero } from '../components/ui/PageHero';
 import { Reveal } from '../components/Reveal';
 import { submitContact } from '../services/contactService';
+import { company } from '../data/company';
+import { Seo } from '../components/Seo';
 
-const projectTypes = ['AI / Machine Learning','AI Agent','Web Application','SaaS Product','Software Development','UI/UX Design','Automation','Cloud / Infrastructure','Consulting','Other'];
-const budgets = ['Not sure yet','Under $5k','$5k – $15k','$15k – $50k','$50k+','Prefer to discuss'];
-const timelines = ['ASAP','1–2 months','3–6 months','6+ months','Exploring an idea'];
+const projectTypes = ['AI / Machine Learning', 'AI Agent', 'Web Application', 'SaaS Product', 'Software Development', 'UI/UX Design', 'Automation', 'Cloud / Infrastructure', 'Consulting', 'Other'];
+const budgets = ['Not sure yet', 'Under $5k', '$5k – $15k', '$15k – $50k', '$50k+', 'Prefer to discuss'];
+const timelines = ['ASAP', '1–2 months', '3–6 months', '6+ months', 'Exploring an idea'];
 
 type FormState = {
   fullName: string; workEmail: string; company: string; phone: string;
   projectType: string; budget: string; timeline: string; description: string; privacyAccepted: boolean;
 };
 
-const initial: FormState = { fullName:'', workEmail:'', company:'', phone:'', projectType:'', budget:'', timeline:'', description:'', privacyAccepted:false };
+const initial: FormState = { fullName: '', workEmail: '', company: '', phone: '', projectType: '', budget: '', timeline: '', description: '', privacyAccepted: false };
 
 export function ContactPage() {
   const [form, setForm] = useState<FormState>(initial);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
-  const [status, setStatus] = useState<'idle'|'loading'|'success'|'error'>('idle');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMsg, setErrorMsg] = useState('');
 
   function validate(): boolean {
@@ -40,9 +42,29 @@ export function ContactPage() {
     if (!validate()) return;
     setStatus('loading');
     setErrorMsg('');
-    const res = await submitContact({ fullName: form.fullName, workEmail: form.workEmail, company: form.company, phone: form.phone, projectType: form.projectType, budget: form.budget, timeline: form.timeline, description: form.description, privacyAccepted: form.privacyAccepted });
-    if (res.ok) { setStatus('success'); setForm(initial); }
-    else { setStatus('error'); setErrorMsg(res.error); }
+    const res = await submitContact({
+      fullName: form.fullName,
+      workEmail: form.workEmail,
+      company: form.company,
+      phone: form.phone,
+      projectType: form.projectType,
+      budget: form.budget,
+      timeline: form.timeline,
+      description: form.description,
+      privacyAccepted: form.privacyAccepted,
+    });
+    if (res.ok) {
+      setStatus('success');
+      setForm(initial);
+    } else {
+      setStatus('error');
+      setErrorMsg(res.error);
+    }
+  }
+
+  function handleRetry() {
+    setStatus('idle');
+    setErrorMsg('');
   }
 
   const fieldCls = (hasErr?: string) => `w-full rounded-xl border bg-ink/60 px-4 py-3.5 text-[0.92rem] text-ivory placeholder:text-slateish/40 focus:outline-none focus:ring-2 focus:ring-brand-cyan/30 ${hasErr ? 'border-red-500/60 focus:border-red-500/60' : 'border-hairline focus:border-brand-cyan/40'}`;
@@ -50,6 +72,7 @@ export function ContactPage() {
   if (status === 'success') {
     return (
       <>
+        <Seo path="/contact" title="Contact" description="Start a conversation with Ideavix. Tell us about your project and let's explore what we can build together." />
         <PageHero eyebrow="Contact" title={<>Let's Build Something <span className="ivx-text-gradient">That Matters.</span></>} copy="Have an idea, product, or challenge? Tell us about it and let's explore what we can build together." />
         <section className="border-t border-hairline/60 py-16">
           <div className="mx-auto w-full max-w-[720px] px-5 sm:px-8">
@@ -68,6 +91,7 @@ export function ContactPage() {
 
   return (
     <>
+      <Seo path="/contact" title="Contact" description="Start a conversation with Ideavix. Tell us about your project and let's explore what we can build together." />
       <PageHero eyebrow="Contact" title={<>Let's Build Something <span className="ivx-text-gradient">That Matters.</span></>} copy="Have an idea, product, or challenge? Tell us about it and let's explore what we can build together." />
       <section className="border-t border-hairline/60 py-12 sm:py-16">
         <div className="mx-auto w-full max-w-[1320px] px-5 sm:px-8">
@@ -78,13 +102,22 @@ export function ContactPage() {
                   <h2 className="font-heading text-[1.2rem] font-medium text-ivory">Ideavix</h2>
                   <p className="mt-3 text-[0.92rem] leading-relaxed text-slateish">A technology studio turning ambitious ideas into intelligent digital products. We work with founders and enterprise teams who have a serious idea and need it built properly.</p>
                   <div className="mt-6 space-y-3 border-t border-hairline/60 pt-6">
-                    <a href="mailto:hello@ideavix.com" className="flex items-center gap-3 text-[0.92rem] text-slateish hover:text-ivory"><Mail className="h-4 w-4 text-brand-cyan" /> hello@ideavix.com</a>
-                    <span className="flex items-center gap-3 text-[0.92rem] text-slateish"><MapPin className="h-4 w-4 text-brand-cyan" /> Remote-first · Available worldwide</span>
+                    <a href={`mailto:${company.email}`} className="flex items-center gap-3 text-[0.92rem] text-slateish hover:text-ivory"><Mail className="h-4 w-4 text-brand-cyan" /> {company.email}</a>
+                    <span className="flex items-center gap-3 text-[0.92rem] text-slateish"><MapPin className="h-4 w-4 text-brand-cyan" /> {company.location}</span>
                   </div>
                   <div className="mt-6 flex gap-2">
-                    <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="rounded-full border border-hairline px-4 py-2 text-[0.8rem] text-slateish hover:text-ivory">LinkedIn</a>
-                    <a href="https://github.com" target="_blank" rel="noreferrer" className="rounded-full border border-hairline px-4 py-2 text-[0.8rem] text-slateish hover:text-ivory">GitHub</a>
-                    <a href="https://x.com" target="_blank" rel="noreferrer" className="rounded-full border border-hairline px-4 py-2 text-[0.8rem] text-slateish hover:text-ivory">X</a>
+                    {company.social.linkedin && (
+                      <a href={company.social.linkedin} target="_blank" rel="noreferrer" className="rounded-full border border-hairline px-4 py-2 text-[0.8rem] text-slateish hover:text-ivory">LinkedIn</a>
+                    )}
+                    {company.social.github && (
+                      <a href={company.social.github} target="_blank" rel="noreferrer" className="rounded-full border border-hairline px-4 py-2 text-[0.8rem] text-slateish hover:text-ivory">GitHub</a>
+                    )}
+                    {company.social.x && (
+                      <a href={company.social.x} target="_blank" rel="noreferrer" className="rounded-full border border-hairline px-4 py-2 text-[0.8rem] text-slateish hover:text-ivory">X</a>
+                    )}
+                    {company.social.instagram && (
+                      <a href={company.social.instagram} target="_blank" rel="noreferrer" className="rounded-full border border-hairline px-4 py-2 text-[0.8rem] text-slateish hover:text-ivory">Instagram</a>
+                    )}
                   </div>
                 </div>
                 <p className="rounded-xl border border-hairline/60 bg-surface/20 px-4 py-3 text-[0.78rem] leading-relaxed text-slateish/70">By submitting this form you agree that Ideavix may store the information you provide to respond to your inquiry. See our <Link to="/privacy" className="text-brand-cyan hover:text-ivory">Privacy Policy</Link>.</p>
@@ -94,8 +127,19 @@ export function ContactPage() {
             <Reveal delay={0.08}>
               <form onSubmit={onSubmit} noValidate className="rounded-3xl border border-hairline bg-surface/40 p-6 sm:p-8">
                 {status === 'error' ? (
-                  <div className="mb-6 flex gap-3 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-[0.9rem] text-red-200">
-                    <AlertCircle className="h-5 w-5 shrink-0" /> <span>{errorMsg || 'Something went wrong. Please try again.'}</span>
+                  <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-[0.9rem] text-red-200">
+                    <div className="flex gap-3">
+                      <AlertCircle className="h-5 w-5 shrink-0 mt-0.5" />
+                      <span>{errorMsg || 'Something went wrong. Please try again.'}</span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={handleRetry}
+                      className="inline-flex items-center gap-2 rounded-lg border border-red-500/50 bg-transparent px-4 py-2 text-[0.84rem] font-medium text-red-200 hover:bg-red-500/10 transition-colors"
+                    >
+                      <ArrowLeft className="h-4 w-4" />
+                      Try Again
+                    </button>
                   </div>
                 ) : null}
 

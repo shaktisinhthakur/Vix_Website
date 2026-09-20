@@ -5,10 +5,12 @@ import { PageHero } from '../components/ui/PageHero';
 import { CTASection } from '../components/ui/CTASection';
 import { Reveal } from '../components/Reveal';
 import { SectionHeading } from '../components/SectionHeading';
+import { Seo } from '../components/Seo';
 
 export function AboutPage() {
   return (
     <>
+      <Seo path="/about" title="About Ideavix" description="Ideavix is a technology studio at the intersection of applied AI, software engineering and product design — deliberately small, senior, and accountable for outcomes." />
       <PageHero eyebrow="About Ideavix" title={<>Technology Starts <span className="ivx-text-gradient">With an Idea.</span></>} copy="We are a technology studio at the intersection of applied AI, software engineering and product design — deliberately small, senior, and accountable for outcomes." />
 
       <section className="border-t border-hairline/60 py-16 sm:py-20">
