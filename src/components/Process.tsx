@@ -6,15 +6,15 @@ import { processSteps } from '../data/site';
 
 export function Process() {
   return (
-    <section className="relative border-t border-hairline/60 py-24 sm:py-32">
+    <section className="relative overflow-hidden border-t border-hairline/60 py-24 sm:py-32">
       <div className="pointer-events-none absolute left-1/2 top-0 h-[420px] w-[720px] -translate-x-1/2 rounded-full bg-brand-blue/8 blur-[140px]" />
       <div className="relative mx-auto w-full max-w-[1320px] px-5 sm:px-8">
         <SectionHeading
           eyebrow="How we work"
           title="From Idea to Impact"
           copy="A single continuous line from first conversation to a platform that keeps growing."
-          align="center" />
-        
+          align="center"
+        />
 
         {/* Desktop: horizontal flow */}
         <div className="relative mt-20 hidden lg:block">
@@ -22,8 +22,8 @@ export function Process() {
             viewBox="0 0 1200 120"
             preserveAspectRatio="none"
             className="absolute inset-x-0 top-[26px] h-[120px] w-full"
-            aria-hidden="true">
-            
+            aria-hidden="true"
+          >
             <defs>
               <linearGradient id="ivx-process-line" x1="0" y1="0" x2="1" y2="0">
                 <stop offset="0%" stopColor="#006BFF" />
@@ -39,8 +39,8 @@ export function Process() {
               initial={{ pathLength: 0, opacity: 0 }}
               whileInView={{ pathLength: 1, opacity: 1 }}
               viewport={{ once: true, margin: '-100px' }}
-              transition={{ duration: 2, ease: 'easeInOut' }} />
-            
+              transition={{ duration: 2, ease: 'easeInOut' }}
+            />
             <path
               d="M40 60 C 180 8, 300 110, 440 60 S 700 8, 840 60 S 1080 110, 1160 60"
               fill="none"
@@ -49,13 +49,13 @@ export function Process() {
               strokeLinecap="round"
               strokeDasharray="10 1200"
               className="animate-dash-flow"
-              style={{ animationDuration: '6s' }} />
-            
+              style={{ animationDuration: '6s' }}
+            />
           </svg>
 
           <ol className="relative grid grid-cols-5 gap-6">
-            {processSteps.map((step, i) =>
-            <Reveal key={step.number} delay={0.15 + i * 0.12}>
+            {processSteps.map((step, i) => (
+              <Reveal key={step.number} delay={0.15 + i * 0.12}>
                 <li className={`group ${i % 2 === 0 ? 'pt-0' : 'pt-24'}`}>
                   <div className="flex items-center gap-3">
                     <span className="relative inline-flex h-3 w-3 items-center justify-center">
@@ -77,15 +77,15 @@ export function Process() {
                   </div>
                 </li>
               </Reveal>
-            )}
+            ))}
           </ol>
         </div>
 
         {/* Mobile / tablet: vertical flow */}
         <ol className="relative mt-14 lg:hidden">
           <span className="absolute bottom-4 left-[15px] top-2 w-px bg-gradient-to-b from-brand-blue via-brand-cyan to-brand-violet opacity-70" />
-          {processSteps.map((step, i) =>
-          <Reveal key={step.number} delay={i * 0.06}>
+          {processSteps.map((step, i) => (
+            <Reveal key={step.number} delay={i * 0.06}>
               <li className="relative flex gap-5 pb-9 last:pb-0">
                 <span className="relative z-10 mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-hairline bg-ink">
                   <span className="h-2 w-2 rounded-full bg-brand-cyan" />
@@ -101,9 +101,9 @@ export function Process() {
                 </div>
               </li>
             </Reveal>
-          )}
+          ))}
         </ol>
       </div>
-    </section>);
-
+    </section>
+  );
 }
